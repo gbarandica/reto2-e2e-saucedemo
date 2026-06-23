@@ -1,0 +1,58 @@
+plugins {
+    id 'java'
+    id 'net.serenity-bdd.serenity-gradle-plugin' version '3.9.8'
+}
+
+group = 'com.SauceDemo'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    serenityCoreVersion = '3.9.8'
+    cucumberVersion = '7.15.0'
+    junitVersion = '4.13.2'
+}
+
+dependencies {
+    // Serenity BDD Core
+    testImplementation "net.serenity-bdd:serenity-core:${serenityCoreVersion}"
+    testImplementation "net.serenity-bdd:serenity-cucumber:${serenityCoreVersion}"
+    testImplementation "net.serenity-bdd:serenity-screenplay:${serenityCoreVersion}"
+    testImplementation "net.serenity-bdd:serenity-screenplay-webdriver:${serenityCoreVersion}"
+    testImplementation "net.serenity-bdd:serenity-ensure:${serenityCoreVersion}"
+
+    // Cucumber
+    testImplementation "io.cucumber:cucumber-java:${cucumberVersion}"
+    testImplementation "io.cucumber:cucumber-junit:${cucumberVersion}"
+
+    // JUnit
+    testImplementation "junit:junit:${junitVersion}"
+
+    // WebDriverManager
+    testImplementation 'io.github.bonigarcia:webdrivermanager:5.9.2'
+
+    // Logback
+    testImplementation 'ch.qos.logback:logback-classic:1.4.14'
+}
+
+test {
+    testLogging.showStandardStreams = true
+
+    // Permite a Serenity descargar automáticamente el driver adecuado
+    systemProperty "webdriver.autodownload", "true"
+}
+
+serenity {
+    reports = ['single-page-html']
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+tasks.withType(Test) {
+    systemProperty "file.encoding", "UTF-8"
+}
