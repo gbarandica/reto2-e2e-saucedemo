@@ -15,17 +15,17 @@ pipeline {
             }
         }
 
-        stage('Ejecución Playwright') {
-            steps {
-                dir('playwright-saucedemo') {
-                    bat 'python -m venv venv'
-                    bat 'venv\\Scripts\\pip install -r requirements.txt'
-                    bat 'venv\\Scripts\\playwright install'
-                    bat 'venv\\Scripts\\behave'
-                }
-            }
+       stage('Ejecución Playwright') {
+    steps {
+        dir('playwright-saucedemo') {
+            bat 'python -m venv venv'
+            bat 'venv\\Scripts\\pip install -r requirements.txt'
+            bat 'venv\\Scripts\\playwright install'
+            bat 'if not exist reports mkdir reports'
+            bat 'venv\\Scripts\\behave -f behave_html_formatter:HTMLFormatter -o reports/playwright-report.html'
         }
     }
+}
 
     post {
         always {
