@@ -7,7 +7,7 @@ pipeline {
     }
 
     stages {
-        stage('Ejecución Serenity') {
+        stage('Ejecucion Serenity') {
             steps {
                 dir('serenity-saucedemo') {
                     bat 'gradlew.bat clean test aggregate'
@@ -15,7 +15,7 @@ pipeline {
             }
         }
 
-        stage('Ejecución Playwright') {
+        stage('Ejecucion Playwright') {
             steps {
                 dir('playwright-saucedemo') {
                     bat 'python -m venv venv'
@@ -30,7 +30,7 @@ pipeline {
 
     post {
         always {
-            archiveArtifacts artifacts: 'serenity-saucedemo/target/site/serenity/**, playwright-saucedemo/reports/**, **/screenshots/**', allowEmptyArchive: true
+            archiveArtifacts artifacts: 'serenity-saucedemo/target/site/serenity/**,playwright-saucedemo/reports/**,**/screenshots/**', allowEmptyArchive: true
         }
     }
 }
